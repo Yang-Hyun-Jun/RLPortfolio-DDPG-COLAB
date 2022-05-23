@@ -176,7 +176,7 @@ class agent(nn.Module):
                 self.balance -= invest_amount * (1+cost)
                 self.portfolio[0] -= invest_amount * (1+cost)/self.portfolio_value
                 self.portfolio[i+1] += invest_amount/self.portfolio_value
-                m_trading[i] =+ invest_amount/self.portfolio_value
+                m_trading[i] += invest_amount/self.portfolio_value
 
             elif -self.delta <= m_trading[i] <= self.delta:
                 m_trading[i] = 0.0
