@@ -39,8 +39,8 @@ class DDPGTester:
         #Model parameter load
         critic_path = utils.SAVE_DIR + "/Models" + "/DDPGPortfolio_critic.pth"
         actor_path = utils.SAVE_DIR + "/Models" + "/DDPGPortfolio_actor.pth"
-        agent.actor.load_state_dict(torch.load(actor_path))
-        agent.critic.load_state_dict(torch.load(critic_path))
+        self.agent.actor.load_state_dict(torch.load(actor_path))
+        self.agent.critic.load_state_dict(torch.load(critic_path))
 
 
     def test(self):
