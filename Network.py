@@ -1,13 +1,13 @@
 import torch
 import torch.nn as nn
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda")
 
 class Actor(nn.Module):
     def __init__(self, K, state1_dim=5, state2_dim=2):
         super().__init__()
         self.K = K
-
         self.layer_s = nn.Linear(state1_dim + state2_dim, 64)
         self.layer1 = nn.Linear(64*K, 128)
         self.layer2 = nn.Linear(128, 64)

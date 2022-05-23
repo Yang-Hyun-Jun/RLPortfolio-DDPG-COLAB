@@ -32,11 +32,11 @@ class DDPGTester:
         #Agent
         self.env = environment(chart_data=test_data)
         self.agent = agent(environment=self.env,
-                      actor=self.actor, actor_target=self.actor_target,
-                      critic=self.critic, critic_target=self.critic_target, K=self.K,
-                      lr=0.0, tau=0.0, discount_factor=0.0, delta=self.delta,
-                      min_trading_price=self.min_trading_price,
-                      max_trading_price=self.max_trading_price)
+                           actor=self.actor, actor_target=self.actor_target,
+                           critic=self.critic, critic_target=self.critic_target, K=self.K,
+                           lr=0.0, tau=0.0, discount_factor=0.0, delta=self.delta,
+                           min_trading_price=self.min_trading_price,
+                           max_trading_price=self.max_trading_price)
 
         #Model parameter load
         critic_path = utils.SAVE_DIR + "/Models" + "/DDPGPortfolio_critic.pth"
@@ -45,7 +45,7 @@ class DDPGTester:
         self.agent.critic.load_state_dict(torch.load(critic_path))
 
 
-    def test(self):
+    def run(self):
         metrics = Metrics()
         self.agent.set_balance(self.balance)
         self.agent.reset()
