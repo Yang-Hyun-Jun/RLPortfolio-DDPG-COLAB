@@ -11,6 +11,7 @@ from Metrics import Metrics
 
 # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 device = torch.device("cuda")
+print(torch.cuda.is_available())
 
 class DDPGLearner:
     def __init__(self,
@@ -144,7 +145,7 @@ class DDPGLearner:
                     pi_vector = self.agent.pi_operator(change)
                     profitloss = self.agent.profitloss
                     np.set_printoptions(precision=4, suppress=True)
-                    print(f"episode:{episode} =========================================================================")
+                    print(f"episode:{episode}")
                     print(f"price:{self.environment.get_price()}")
                     print(f"q_value:{q_value}")
                     print(f"d_portfolio:{d_portfolio}")
@@ -161,7 +162,7 @@ class DDPGLearner:
                     print(f"profitloss:{profitloss}")
                     print(f"actor_loss:{self.agent.actor_loss}")
                     print(f"critic_loss:{self.agent.critic_loss}")
-
+                    print("=========================================================================")
 
                 #학습
                 if len(self.memory) >= self.batch_size:
