@@ -9,13 +9,13 @@ from Network import Actor
 from Network import Qnet
 
 class DDPGTester:
-    def __init__(self, test_data, balance, min_trading_price, max_trading_price, delta):
+    def __init__(self, test_data, balance, min_trading_price, max_trading_price, delta, K):
 
         self.test_data = test_data
 
         self.state1_dim = 5
         self.state2_dim = 2
-        self.K = 3
+        self.K = K
 
         self.actor = Actor(K=K)
         self.actor_target = Actor(K=K)
@@ -76,7 +76,7 @@ class DDPGTester:
                 break
 
         #Benchmark: B&H
-        self.agent.set_balance(15000000)
+        self.agent.set_balance(self.balance)
         self.agent.reset()
         self.agent.environment.reset()
         self.agent.delta = 0.0

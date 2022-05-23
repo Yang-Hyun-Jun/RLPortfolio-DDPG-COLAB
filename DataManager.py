@@ -72,7 +72,6 @@ def get_data_tensor(path_list,
     print(f"학습 데이터 마지막 거래일: {20191231}")
     print(f"테스트 데이터 시작 거래일: {20200102}")
     print(f"테스트 데이터 마지막 거래일: {20211231}")
-
     print(f"학습 데이터:{train_data.shape}")
     print(f"테스트 데이터:{test_data.shape}")
     print("-------------------------------------")
