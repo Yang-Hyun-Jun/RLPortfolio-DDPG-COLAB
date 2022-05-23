@@ -86,10 +86,10 @@ class DDPGTester:
         while True:
             trading = np.ones(self.K)/self.K
             confidence = abs(trading)
-            _, next_state1, next_portfolio, reward, done = agent.step(trading, confidence)
-            metrics.profitlosses_BH.append(agent.profitloss)
+            _, next_state1, next_portfolio, reward, done = self.agent.step(trading, confidence)
+            metrics.profitlosses_BH.append(self.agent.profitloss)
             if done:
-                print(f"B&H{agent.profitloss}")
+                print(f"B&H{self.agent.profitloss}")
                 break
 
 
