@@ -20,10 +20,10 @@ class DDPGTester:
         self.state2_dim = 2
         self.K = K
 
-        self.actor = Actor(K=K)
-        self.actor_target = Actor(K=K)
-        self.critic = Qnet(K=K)
-        self.critic_target = Qnet(K=K)
+        self.actor = Actor(K=K).to(device)
+        self.actor_target = Actor(K=K).to(device)
+        self.critic = Qnet(K=K).to(device)
+        self.critic_target = Qnet(K=K).to(device)
 
         self.delta = delta
         self.balance = balance
