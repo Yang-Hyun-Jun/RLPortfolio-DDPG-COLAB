@@ -9,6 +9,7 @@ from Network import Actor
 from Network import Qnet
 from Metrics import Metrics
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class DDPGLearner:
     def __init__(self,
@@ -27,10 +28,10 @@ class DDPGLearner:
         self.chart_data = chart_data
         self.batch_size = batch_size
 
-        self.actor = Actor(K=K)
-        self.actor_target = Actor(K=K)
-        self.critic = Qnet(K=K)
-        self.critic_target = Qnet(K=K)
+        self.actor = Actor(K=K).to(device)
+        self.actor_target = Actor(K=K).to(device)
+        self.critic = Qnet(K=K).to(device)
+        self.critic_target = Qnet(K=K).to(device)
 
         self.actor_target.load_state_dict(self.actor.state_dict())
         self.critic_target.load_state_dict(self.critic.state_dict())
@@ -100,20 +101,20 @@ class DDPGLearner:
             state1 = self.environment.observe()
             portfolio = self.agent.portfolio
             while True:
-                action, trading, confidence = self.agent.get_action(torch.tensor(state1).float().view(1, self.K, -1),
-                                                                    torch.tensor(portfolio).float().view(1, self.K+1, -1))
+                action, trading, confidence = self.agent.get_action(torch.tensor(state1, device=device).float().view(1, self.K, -1),
+                                                                    torch.tensor(portfolio, device=device).float().view(1, self.K+1, -1))
 
                 trading = trading.clip(-1.0, 1.0)
                 m_trading, next_state1, next_portfolio, reward, done = self.agent.step(trading, confidence)
 
                 steps_done += 1
-                experience = (torch.tensor(state1).float().view(1, self.K, -1),
-                              torch.tensor(portfolio).float().view(1, self.K+1, -1),
-                              torch.tensor(action).float().view(1, -1),
-                              torch.tensor(reward).float().view(1,-1),
-                              torch.tensor(next_state1).float().view(1, self.K, -1),
-                              torch.tensor(next_portfolio).float().view(1, self.K+1, -1),
-                              torch.tensor(done).float().view(1,-1))
+                experience = (torch.tensor(state1, device=device).float().view(1, self.K, -1),
+                              torch.tensor(portfolio, device=device).float().view(1, self.K+1, -1),
+                              torch.tensor(action, device=device).float().view(1, -1),
+                              torch.tensor(reward, device=device).float().view(1,-1),
+                              torch.tensor(next_state1, device=device).float().view(1, self.K, -1),
+                              torch.tensor(next_portfolio, device=device).float().view(1, self.K+1, -1),
+                              torch.tensor(done, device=device).float().view(1,-1))
 
                 self.memory.push(experience)
                 cum_r += reward
@@ -123,12 +124,12 @@ class DDPGLearner:
                 if steps_done % 300 == 0:
                     self.agent.critic.eval()
                     self.agent.actor.eval()
-                    q_value = self.agent.critic(torch.tensor(state1).float().view(1, self.K, -1),
-                                                torch.tensor(portfolio).float().view(1, self.K+1, -1),
-                                                torch.tensor(action).float().view(1, -1)).detach().numpy()[0]
+                    q_value = self.agent.critic(torch.tensor(state1, device=device).float().view(1, self.K, -1),
+                                                torch.tensor(portfolio, device=device).float().view(1, self.K+1, -1),
+                                                torch.tensor(action, device=device).float().view(1, -1)).cpu().detach().numpy()[0]
 
-                    d_portfolio = self.agent.actor(torch.tensor(state1).float().view(1, self.K, -1),
-                                                   torch.tensor(portfolio).float().view(1, self.K+1, -1)).detach().numpy()[0]
+                    d_portfolio = self.agent.actor(torch.tensor(state1, device=device).float().view(1, self.K, -1),
+                                                   torch.tensor(portfolio, device=device).float().view(1, self.K+1, -1)).cpu().detach().numpy()[0]
                     self.agent.critic.train()
                     self.agent.actor.train()
                     t = trading

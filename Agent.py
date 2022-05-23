@@ -70,7 +70,7 @@ class agent(nn.Module):
         with torch.no_grad():
             self.actor.eval()
             noise = self.normal_noise()
-            action = self.actor(state1, portfolio).numpy()[0]
+            action = self.actor(state1, portfolio).cpu().numpy()[0]
             trading = (action - self.portfolio)[1:]
             action = action + noise
             confidence = abs(trading)
