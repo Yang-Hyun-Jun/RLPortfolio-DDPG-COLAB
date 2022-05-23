@@ -10,7 +10,6 @@ from Network import Qnet
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-
 class DDPGTester:
     def __init__(self, test_data, balance, min_trading_price, max_trading_price, delta, K):
 
@@ -57,8 +56,9 @@ class DDPGTester:
         steps_done = 0
 
         while True:
-            action, trading, confidence = self.agent.get_action(torch.tensor(state1, device=device).float().view(1, self.K, -1),
-                                                                torch.tensor(portfolio, device=device).float().view(1, self.K+1, -1))
+            action, trading, confidence = \
+                self.agent.get_action(torch.tensor(state1, device=device).float().view(1, self.K, -1),
+                                      torch.tensor(portfolio, device=device).float().view(1, self.K+1, -1))
 
             _, next_state1, next_portfolio, reward, done = self.agent.step(trading, confidence)
 
