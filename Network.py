@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class Actor(nn.Module):
     def __init__(self, K, state1_dim=5, state2_dim=2):
@@ -38,7 +39,7 @@ class Actor(nn.Module):
         x = self.hidden_act(x)
         x = self.layer3(x)
 
-        cash_bias = torch.ones(size=(x.shape[0],1)) * 0.1
+        cash_bias = torch.ones(size=(x.shape[0],1), device=device) * 0.1
         x = torch.cat([cash_bias, x], dim=-1)
         portfolio = torch.softmax(x, dim=-1)
         return portfolio
