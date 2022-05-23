@@ -10,6 +10,7 @@ from Network import Qnet
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+
 class DDPGTester:
     def __init__(self, test_data, balance, min_trading_price, max_trading_price, delta, K):
 
@@ -106,4 +107,3 @@ class DDPGTester:
 
         Visualizer.get_portfolio_value_curve(metrics.portfolio_values, save_path=Vsave_path2)
         Visualizer.get_profitloss_curve(metrics.profitlosses,  metrics.profitlosses_BH, save_path=Vsave_path4)
-

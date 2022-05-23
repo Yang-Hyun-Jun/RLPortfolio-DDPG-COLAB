@@ -9,9 +9,7 @@ from Network import Actor
 from Network import Qnet
 from Metrics import Metrics
 
-# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-device = torch.device("cuda")
-print(torch.cuda.is_available())
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class DDPGLearner:
     def __init__(self,

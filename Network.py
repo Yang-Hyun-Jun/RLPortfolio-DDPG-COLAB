@@ -1,8 +1,7 @@
 import torch
 import torch.nn as nn
 
-# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-device = torch.device("cuda")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class Actor(nn.Module):
     def __init__(self, K, state1_dim=5, state2_dim=2):
