@@ -78,14 +78,18 @@ class DDPGTester:
                 print(f"model{self.agent.profitloss}")
                 break
 
+
         #Benchmark: B&H
         self.agent.set_balance(self.balance)
         self.agent.reset()
         self.agent.environment.reset()
+        print(self.agent.environment.idx)
         self.agent.delta = 0.0
+
         while True:
             trading = np.ones(self.K)/self.K
             confidence = abs(trading)
+
             _, next_state1, next_portfolio, reward, done = self.agent.step(trading, confidence)
             metrics.profitlosses_BH.append(self.agent.profitloss)
             if done:
