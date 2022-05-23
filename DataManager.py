@@ -68,10 +68,13 @@ def get_data_tensor(path_list,
             test_data = np.concatenate([test_data, test_data_], axis=-1)
 
     print("-------------------------------------")
-    print(f"학습 데이터 시작 거래일:{20140602}")
-    print(f"학습 데이터 마지막 거래일:{20191231}")
-    print(f"테스트 데이터 시작 거래일:{20200102}")
-    print(f"테스트 데이터 마지막 거래일:{20211231}")
+    print(f"학습 데이터 시작 거래일: {20140602}")
+    print(f"학습 데이터 마지막 거래일: {20191231}")
+    print(f"테스트 데이터 시작 거래일: {20200102}")
+    print(f"테스트 데이터 마지막 거래일: {20211231}")
+
+    print(f"학습 데이터:{train_data.shape}")
+    print(f"테스트 데이터:{test_data.shape}")
     print("-------------------------------------")
     return train_data, test_data
 
