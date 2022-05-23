@@ -4,11 +4,11 @@ class environment:
     def __init__(self, chart_data=None):
         self.chart_data = chart_data
         self.observation = None
-        self.idx = - 1
+        self.idx = -1
 
     def reset(self):
         self.observation = None
-        self.idx = - 1
+        self.idx = -1
 
     def observe(self):
         if len(self.chart_data)-1 >= self.idx:
