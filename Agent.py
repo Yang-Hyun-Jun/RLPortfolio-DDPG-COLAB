@@ -131,7 +131,7 @@ class agent(nn.Module):
         m_trading = self.validate_action(trading, self.delta)
         self.portfolio_value_static_ = self.portfolio * self.portfolio_value
 
-        #우선 전체적으로 종목별 매도 수행을 먼저한다.
+        # 우선 전체적으로 종목별 매도 수행을 먼저 한다.
         for i in range(m_trading.shape[0]):
             p1_price = close_p1[i]
 
@@ -152,7 +152,7 @@ class agent(nn.Module):
                 m_trading[i] = -invest_amount/self.portfolio_value
 
 
-        #다음으로 종목별 매수 수행
+        # 다음으로 종목별 매수 수행
         for i in range(m_trading.shape[0]):
             p1_price = close_p1[i]
 
@@ -164,7 +164,7 @@ class agent(nn.Module):
                 trading_unit = self.decide_trading_unit(confidence[i], p1_price)
                 cal_balance = (self.balance - p1_price * trading_unit * (1+cost))
 
-                #돈 부족 한 경우
+                # 돈 부족 한 경우
                 if cal_balance < 0:
                     trading_unit = min(
                         int(self.balance / (p1_price * (1+cost))),
@@ -176,7 +176,7 @@ class agent(nn.Module):
                 self.balance -= invest_amount * (1+cost)
                 self.portfolio[0] -= invest_amount * (1+cost)/self.portfolio_value
                 self.portfolio[i+1] += invest_amount/self.portfolio_value
-                m_trading[i] += invest_amount/self.portfolio_value
+                m_trading[i] = invest_amount/self.portfolio_value
 
             elif -self.delta <= m_trading[i] <= self.delta:
                 m_trading[i] = 0.0
@@ -185,7 +185,7 @@ class agent(nn.Module):
         거래로 인한 PV와 PF 변동 계산
         """
         self.portfolio_value -= fee
-        self.portfolio = self.portfolio / np.sum(self.portfolio) #sum = 1
+        self.portfolio = self.portfolio / np.sum(self.portfolio) # sum = 1
 
         """
         다음 Time step 으로 진행 함에 따라
