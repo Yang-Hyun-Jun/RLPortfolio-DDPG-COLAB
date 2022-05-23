@@ -52,8 +52,8 @@ class DDPGTester:
         self.agent.reset()
         self.agent.environment.reset()
 
-        state1 = agent.environment.observe()
-        portfolio = agent.portfolio
+        state1 = self.agent.environment.observe()
+        portfolio = self.agent.portfolio
         steps_done = 0
 
         while True:
