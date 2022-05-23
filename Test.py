@@ -60,7 +60,6 @@ class DDPGTester:
             action, trading, confidence = self.agent.get_action(torch.tensor(state1, device=device).float().view(1, self.K, -1),
                                                                 torch.tensor(portfolio, device=device).float().view(1, self.K+1, -1))
 
-            print(done)
             _, next_state1, next_portfolio, reward, done = self.agent.step(trading, confidence)
 
             steps_done += 1
