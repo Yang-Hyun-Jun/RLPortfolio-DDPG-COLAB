@@ -7,8 +7,8 @@ from Noise import Normal
 class agent(nn.Module):
     # TRADING_CHARGE = 0.00015
     # TRADING_TEX = 0.0025
-    TRADING_CHARGE = 0.0
-    TRADING_TEX = 0.0
+    # TRADING_CHARGE = 0.0
+    # TRADING_TEX = 0.0
 
     ACTIONS = []
     NUM_ASSETS = 0
@@ -19,7 +19,7 @@ class agent(nn.Module):
                  critic_target:nn.Module,
                  actor:nn.Module,
                  actor_target:nn.Module,
-                 lr:float, K:int,
+                 lr:float, K:int, cost:float,
                  tau:float, delta:float,
                  discount_factor:float,
                  min_trading_price:int,
@@ -47,6 +47,8 @@ class agent(nn.Module):
         self.num_stocks = np.array([0] * self.K)
         self.portfolio = np.array([0] * (self.K+1), dtype=float)
 
+        self.TRADING_CHARGE = cost
+        self.TRADING_TEX = 0.0
         self.portfolio_value = 0
         self.initial_balance = 0
         self.balance = 0

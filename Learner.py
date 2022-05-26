@@ -16,7 +16,7 @@ class DDPGLearner:
                  tau=0.005, delta=0.05,
                  discount_factor=0.90,
                  batch_size=30, memory_size=100,
-                 chart_data=None, K=None, lr=1e-6,
+                 chart_data=None, K=None, lr=1e-6, cost=0.0025,
                  min_trading_price=None, max_trading_price=None):
 
         assert min_trading_price >= 0
@@ -42,6 +42,7 @@ class DDPGLearner:
         self.tau = tau
         self.K = K
         self.delta = delta
+        self.cost = cost
         self.discount_factor = discount_factor
         self.min_trading_price = min_trading_price
         self.max_trading_price = max_trading_price
@@ -51,7 +52,7 @@ class DDPGLearner:
                            critic_target=self.critic_target,
                            actor=self.actor,
                            actor_target=self.actor_target,
-                           lr=self.lr, K=self.K,
+                           lr=self.lr, K=self.K, cost=self.cost,
                            tau=self.tau, delta=self.delta,
                            discount_factor=self.discount_factor,
                            min_trading_price=min_trading_price,

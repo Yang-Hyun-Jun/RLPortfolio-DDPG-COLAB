@@ -11,7 +11,10 @@ from Network import Qnet
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class DDPGTester:
-    def __init__(self, test_data, balance, min_trading_price, max_trading_price, delta, K):
+    def __init__(self,
+                 test_data, balance,
+                 min_trading_price, max_trading_price,
+                 delta, K, cost=0.0025):
 
         self.test_data = test_data
 
@@ -25,6 +28,7 @@ class DDPGTester:
         self.critic_target = Qnet(K=K).to(device)
 
         self.delta = delta
+        self.cost = cost
         self.balance = balance
         self.min_trading_price = min_trading_price
         self.max_trading_price = max_trading_price
@@ -32,7 +36,7 @@ class DDPGTester:
         #Agent
         self.env = environment(chart_data=test_data)
         self.agent = agent(environment=self.env,
-                           actor=self.actor, actor_target=self.actor_target,
+                           actor=self.actor, actor_target=self.actor_target, cost=self.cost,
                            critic=self.critic, critic_target=self.critic_target, K=self.K,
                            lr=0.0, tau=0.0, discount_factor=0.0, delta=self.delta,
                            min_trading_price=self.min_trading_price,
