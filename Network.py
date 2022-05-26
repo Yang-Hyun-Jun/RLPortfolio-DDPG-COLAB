@@ -11,7 +11,7 @@ class Actor(nn.Module):
         self.layer_s = nn.Linear(state1_dim + state2_dim, 64)
         self.layer1 = nn.Linear(64*K, 128)
         self.layer2 = nn.Linear(128, 64)
-        self.layer3 = nn.Linear(64, 3)
+        self.layer3 = nn.Linear(64, K)
         self.hidden_act = nn.ReLU()
 
         nn.init.kaiming_normal_(self.layer1.weight, nonlinearity="relu")
