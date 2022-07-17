@@ -1,6 +1,13 @@
 import torch
 import torch.nn as nn
 
+
+seed = 2
+#파이토치 랜덤 시드 고정
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
@@ -86,9 +93,6 @@ class Qnet(nn.Module):
 if __name__ == "__main__":
     s1_tensor = torch.rand(size=(10, 3, 5))
     portfolio = torch.rand(size=(10, 4, 1))
-    action = torch.rand(size=(10, 3))
 
     actor = Actor(K=3)
-    qnet = Qnet(K=3)
-    print(actor(s1_tensor,portfolio).shape)
-    print(qnet(s1_tensor,portfolio,action).shape)
+    actor(s1_tensor,portfolio)

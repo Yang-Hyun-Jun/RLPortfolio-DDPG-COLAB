@@ -1,5 +1,10 @@
 import numpy as np
 
+seed = 2
+#넘파이 랜덤 시드 고정
+np.random.seed(seed)
+
+
 class OUProcess:
   def __init__(self, mu):
       self.theta, self.dt, self.sigma = 0.1, 0.01, 0.1

@@ -4,6 +4,16 @@ import numpy as np
 from Noise import OUProcess
 from Noise import Normal
 
+seed = 2
+
+#넘파이 랜덤 시드 고정
+np.random.seed(seed)
+#파이토치 랜덤 시드 고정
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
+
+
 class agent(nn.Module):
     # TRADING_CHARGE = 0.00015
     # TRADING_TEX = 0.0025

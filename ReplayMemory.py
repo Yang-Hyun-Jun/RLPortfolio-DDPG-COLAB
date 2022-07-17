@@ -1,5 +1,10 @@
 import random
 import torch
+
+seed = 2
+random.seed(seed)
+
+
 class ReplayMemory:
     def __init__(self, max_size):
         self.buffer = [None] * max_size
